@@ -1,8 +1,8 @@
-package repository;
+package ru.netology.SpringJDBC.repository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
-import org.springframework.jdbc.core.ResultSetExtractor;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -10,21 +10,17 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.util.Map;
+import java.util.List;
 import java.util.stream.Collectors;
 
 @Repository
 public class MyRepo {
 
-    public MyRepo() {
-    }
+    @Autowired
+    private NamedParameterJdbcTemplate template;
 
 
-    public static NamedParameterJdbcTemplate template;
-
-
-    public static String SCRIPT = read("myScript.sql");
-
+    public final String SCRIPT = read("myScript.sql");
 
     public static String read(String scriptFileName) {
         try (InputStream is = new ClassPathResource(scriptFileName).getInputStream();
@@ -35,8 +31,8 @@ public class MyRepo {
         }
     }
 
-    public static String getProductName(String name) {
-        String result = template.query(SCRIPT, Map.of("name", name), (ResultSetExtractor<String>) (data) -> data.getString("name"));
-        return result;
+    public List<String> getProductName(String name) {
+        MapSqlParameterSource parameters = new MapSqlParameterSource("name", name);
+        return template.queryForList(SCRIPT, parameters, String.class);
     }
 }
