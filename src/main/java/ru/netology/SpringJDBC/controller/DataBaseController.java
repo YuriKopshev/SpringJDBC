@@ -20,7 +20,7 @@ public class DataBaseController {
     }
 
     @GetMapping("products/fetch-product")
-    public List<String> getProduct(@RequestParam String name) {
+    public List<Object> getProduct(@RequestParam String name) {
         return myRepo.getProductName(name);
     }
 }
