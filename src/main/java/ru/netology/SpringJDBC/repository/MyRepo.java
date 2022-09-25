@@ -1,6 +1,5 @@
 package ru.netology.SpringJDBC.repository;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -16,11 +15,15 @@ import java.util.stream.Collectors;
 @Repository
 public class MyRepo {
 
-    @Autowired
-    private NamedParameterJdbcTemplate template;
+
+    private final NamedParameterJdbcTemplate template;
 
 
     public final String SCRIPT = read("myScript.sql");
+
+    public MyRepo(NamedParameterJdbcTemplate template) {
+        this.template = template;
+    }
 
     public static String read(String scriptFileName) {
         try (InputStream is = new ClassPathResource(scriptFileName).getInputStream();

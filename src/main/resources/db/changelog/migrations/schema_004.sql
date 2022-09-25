@@ -1,0 +1,1 @@
+INSERT INTO CUSTOMERS (id, name, surname, age, phone_number) VALUE (2,'Yuri','Dublin',35,678965);

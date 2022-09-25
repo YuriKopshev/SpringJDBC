@@ -1,0 +1,1 @@
+INSERT INTO ORDERS (id, date, customer_id, product_name, amount) VALUE (1,'23.05.2021',2,'fanta',12);

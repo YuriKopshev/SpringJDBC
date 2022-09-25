@@ -1,4 +1,20 @@
 databaseChangeLog:
  - include:
       file: db/changelog/migrations/schema_001.sql
-      relativeToChangeFile: true
+      relativeToChangeFile: false
+
+ - include:
+      file: db/changelog/migrations/schema_002.sql
+      relativeToChangeFile: false
+
+# - include:
+#     file: db/changelog/migrations/schema_003.sql
+#     relativeToChangeFile: false
+#
+# - include:
+#     file: db/changelog/migrations/schema_004.sql
+#     relativeToChangeFile: false
+
+ - include:
+     file: db/changelog/migrations/schema_005.sql
+     relativeToChangeFile: true
