@@ -9,3 +9,5 @@
 ##### Для запуска без миграций с созданием новый базы, меняем параметры в application.properties на:
 `spring.sql.init.mode=always`
 `spring.liquibase.enabled=false`
+
+***В ветке hibernate переписана логика работы с использованием  Hibernate и  Java Persistance API (JPA).***

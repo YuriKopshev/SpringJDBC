@@ -4,7 +4,10 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
+import ru.netology.SpringJDBC.model.Orders;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -15,27 +18,10 @@ import java.util.stream.Collectors;
 @Repository
 public class MyRepo {
 
+    @PersistenceContext
+    EntityManager manager;
 
-    private final NamedParameterJdbcTemplate template;
-
-
-    public final String SCRIPT = read("myScript.sql");
-
-    public MyRepo(NamedParameterJdbcTemplate template) {
-        this.template = template;
-    }
-
-    public static String read(String scriptFileName) {
-        try (InputStream is = new ClassPathResource(scriptFileName).getInputStream();
-             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(is))) {
-            return bufferedReader.lines().collect(Collectors.joining("\n"));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    public List<String> getProductName(String name) {
-        MapSqlParameterSource parameters = new MapSqlParameterSource("name", name);
-        return template.queryForList(SCRIPT, parameters, String.class);
+    public List<Object> getProductName(String name) {
+        return manager.createQuery("select o.product_name from Orders o where o.customers.name =:name").setParameter("name", name).getResultList();
     }
 }
